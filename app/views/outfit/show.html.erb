@@ -1,0 +1,17 @@
+<div class="jumbotron" id="smalltron">
+<h1 class="text-right"><em>Past Outfit</em></h1>
+</div>
+
+<div class="col-xs-12">
+<h4>Worn on <%= @order.created_at.strftime("%A, %b %d, %Y") %>:</h4>
+</div>
+
+<div>
+<% @order.line_items.each do |line_item| %>
+  <p class="thumbnail col-xs-3"><%= image_tag line_item.item.image, height:"200px"%></p>
+<% end %>
+</div>
+
+<div class="col-xs-12">
+  <%= link_to "Back", past_outfits_path %>
+</div>

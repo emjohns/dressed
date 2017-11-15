@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    <title>Dressed</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href='https://fonts.googleapis.com/css?family=Jaldi' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Syncopate' rel='stylesheet'>
+  </head>
+
+  <body>
+    <% if user_signed_in? %>
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li class="navbar-brand" id="brand">
+            <%= link_to image_tag("icon.png", height:"25px", id:"brand"), root_path %>
+          </li>
+          <li>
+            <%= link_to 'My Closet', items_path(name: current_user.name) %>
+          </li>
+          <li>
+            <%= link_to 'New Item', new_item_path %>
+          </li>
+          <li>
+            <%= link_to 'New Item Tag', new_tag_path %>
+          </li>
+        </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                Welcome, <%= current_user.name %>!
+                <span class="glyphicon glyphicon-chevron-down"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <p class="text-center">
+
+                          <strong><%= current_user.name %></strong>
+                        </p>
+
+                      </div>
+                    </div>
+                    <li>
+                        <p class="text-center small"><%= current_user.email %></p>
+                      </li>
+                      <li class="divider"></li>
+                      <li><p class="text-center"><%= link_to "View Outfit", view_outfit_path %></p></li>
+                      <li><p class="text-center"><%= link_to "Past Outfits", past_outfits_path %></p></li>
+                      <li class="divider"></li>
+                      <li>
+                        <p class="text-center">
+                          <%= link_to "Edit Profile", edit_user_registration_path %>
+                        </p>
+                      </li>
+                </li>
+                <li>
+                  <div class="navbar-login navbar-login-session">
+                    <div class="row">
+                      <div class="col-lg-8">
+                        <p class="text-center">
+                          <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        </nav>
+        <% else %>
+        <nav class="navbar navbar-default navbar-static-top">
+          <div class="container">
+            <ul class="nav navbar-nav">
+              <li>
+                <%= link_to 'Home', root_path %>
+              </li>
+              <li>
+                <%= link_to 'About Us', about_us_path %>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <%= link_to 'Log In', new_user_session_path %>
+              </li>
+              <li>
+                <%= link_to 'Sign Up', new_user_registration_path %>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <% end %>
+<div id="backcolor">
+  <div class="container">
+    <%= yield %>
+  </div>
+</div>
+
+  </body>
+</html>

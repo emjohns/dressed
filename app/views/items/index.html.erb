@@ -1,0 +1,94 @@
+<p id="notice"><%= notice %></p>
+
+<div class="jumbotron" id="smalltron">
+<h1 class="text-right"><em>My Closet</em></h1>
+</div>
+
+
+<div>
+    <%= search_form_for @q do |f| %>
+    <div class="form-group col-xs-3">
+<%= f.label :name_cont, "Category: " %>
+  <%= f.select :category_cont, Item::TYPES, include_blank: true, class:"form-control" %>
+</div>
+<div class="form-group col-xs-3">
+  <%= f.label :name_cont, "Color: " %>
+  <%= f.select :color_cont, Item::COLORS, include_blank: true, class:"form-control" %>
+</div>
+<div class="form-group col-xs-8">
+    <%= f.label "Tags:" %><br/>
+<%= f.collection_check_boxes :tags_id_in, current_user.tags.all, :id, :name do |b| %>
+  <div class="collection-check-box checkbox-inline">
+    <%= b.check_box %>
+    <%= b.label %>
+  </div>
+<% end %>
+</div>
+<div class="form-group col-xs-12">
+  <%= f.submit 'Search My Closet', class:"btn btn-primary" %>
+</div>
+<% end %>
+  </div>
+
+
+  <div class="media col-xs-12 col-lg-12" id="mediaitem">
+    <% @items.each do |item| %>
+<div class="thumbnail col-xs-5 col-lg-5">
+      <div class="media-left">
+        <% if item.image.nil? == false %>
+        <p class="media-object"><%= image_tag item.image, height:"200px" %></p>
+        <% end %>
+      </div>
+      <div class="media-body">
+        <p><% if item.category.nil? == false %>
+          <%= item.category.capitalize %>
+          <% end %></p>
+          <p><% if item.color.nil? == false %>
+            <%= item.color.capitalize %>
+            <% end %></p>
+            <p><%= item.tags.map(&:name).sort.join(", ") %></p>
+        <p><%= link_to 'Show', item %> |
+          <%= link_to 'Edit', edit_item_path(item) %>
+          <p>
+            <a href="#" data-toggle="modal" data-target="#myModal_<%= item.id %>">
+              <span class="glyphicon glyphicon-plus"></span> Quick View
+            </a>
+          </p>
+
+          <div class="modal fade " id="myModal_<%= item.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body text-center">
+                  <% if item.image.url.nil? == false %>
+                    <p><%= image_tag item.image.url, class: "center-block", height: "300px" %></p>
+                  <% end %>
+                  <h3><%= link_to item.category.capitalize, item %></h3>
+                  <p><%= item.color.capitalize %></p>
+                  <p><%= item.tags.map(&:name).sort.join(", ") %></p>
+                </div>
+                <div class="modal-footer">
+                  <p>
+                    <%= form_tag add_to_outfit_path do %>
+                    <%= hidden_field_tag :item_id, item.id %>
+                    <%= submit_tag "Add to Outfit", class: "btn btn-primary center-block" %>
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </div>
+    </div>
+    <% end %>
+  </div>
+
+
+<nav aria-label="Page navigation" class="container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="pagination">
+<%= paginate @items %>
+</div>
+</nav>

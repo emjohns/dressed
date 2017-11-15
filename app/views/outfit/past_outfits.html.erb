@@ -1,0 +1,21 @@
+<div class="jumbotron" id="smalltron">
+<h1 class="text-right"><em>Past Outfits</em></h1>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Worn on:</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+<% current_user.orders.reverse_each do |order| %>
+<tr>
+  <td><%= order.created_at.strftime("%A, %b %d, %Y") %></td>
+  <td><%= link_to 'Show', show_outfit_path(id: order.id) %></td>
+</tr>
+<% end %>
+</tbody>
+</table>

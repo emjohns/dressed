@@ -1,0 +1,10 @@
+<div class="jumbotron" id="smalltron">
+<h1 class="text-right"><em>My Outfit</em></h1>
+</div>
+
+<h2 class="text-center">Today's Outfit</h2>
+
+
+<% @order.line_items.each do |line_item| %>
+  <div class="thumbnail col-xs-3"><%= image_tag line_item.item.image, height:"200px"%></div>
+<% end %>

@@ -1,0 +1,18 @@
+<body id="background">
+<div id="hometron" class="jumbotron text-center">
+  <h1><em>Dressed</em></h1>
+  <br />
+  <p>Use technology to answer the day's most difficult question:</p>
+  <p>What to Wear?</p>
+  <br />
+  <p><%= link_to 'Log In', new_user_session_path, {class: "btn btn-default"} %>
+  <%= link_to 'Sign Up', new_user_registration_path, {class: "btn btn-default"} %></p>
+  <br />
+  <p><%= link_to 'About Dressed', about_us_path %></p>
+</div>
+</body>
+<div class="container-fluid navbar-fixed-bottom">
+  <h5><small>@ EJ Technologies |
+    <%= link_to 'Home', root_path %> |
+    <%= link_to 'About Us', about_us_path %></small></h5>
+  </div>

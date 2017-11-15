@@ -1,0 +1,46 @@
+<%= form_with(model: item, local: true) do |form| %>
+  <% if item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+      <% item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <strong>Upload Clothing Image: </strong>
+    <%= form.file_field :image, class:"form-control-file" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.select :category, Item::TYPES, {include_blank: "Please select a category" } %>
+  </div>
+
+  <div class="form-group">
+    <%= form.select :color, Item::COLORS, {include_blank: "Please select a color" } %>
+  </div>
+
+  <div class="field">
+    <%= form.label "Item Tags" %><br />
+    <%= form.collection_check_boxes :tag_ids, current_user.tags.all, :id, :name do |b| %>
+      <div class="collection-check-box">
+        <%= b.check_box %>
+        <%= b.label %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= form.hidden_field :user_id, value: current_user.id %>
+  </div>
+
+<div class="container col-xs-12">
+  <div class="actions">
+    <%= form.submit 'Add Clothing', class:"btn btn-primary" %>
+  </div>
+</div>
+<% end %>

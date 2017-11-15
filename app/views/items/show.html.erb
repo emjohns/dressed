@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <%= image_tag @item.image, width:"200px"%>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <% if @item.category.nil? == false %>
+  <%= @item.category.capitalize %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Color:</strong>
+  <% if @item.color.nil? == false %>
+  <%= @item.color.capitalize %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+  <% @item.tags.each do |tag| %>
+  <%= tag.name %>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_item_path(@item) %> |
+<%= link_to 'My Closet', items_path %>

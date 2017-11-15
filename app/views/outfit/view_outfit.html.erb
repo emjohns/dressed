@@ -1,0 +1,30 @@
+<div class="jumbotron" id="smalltron">
+<h1 class="text-right"><em>My Outfit</em></h1>
+</div>
+
+<div>
+  <% @line_items.each do |line_item| %>
+  <div class="thumbnail">
+        <div class="media-left">
+          <% if line_item.item.image.nil? == false %>
+          <p class="media-object"><%= image_tag line_item.item.image, height:"200px" %></p>
+          <% end %>
+        </div>
+        <div class="media-body">
+          <p><% if line_item.item.category.nil? == false %>
+            <%= line_item.item.category.capitalize %>
+            <% end %></p>
+            <p><% if line_item.item.color.nil? == false %>
+              <%= line_item.item.color.capitalize %>
+              <% end %></p>
+              <p><%= line_item.item.tags.map(&:name).sort.join(", ") %></p>
+          <p><%= link_to 'Show', line_item.item %> |
+            <%= link_to 'Remove', remove_line_item_path(line_item_id: line_item.id), method: :delete %> </p>
+          </div>
+        </div>
+  <% end %>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <%= link_to "Get Dressed", get_dressed_path, class: "btn btn-primary" %>
+</div>
